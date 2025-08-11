@@ -69,7 +69,7 @@ class _NetworkVideoPlayerScreenState extends State<NetworkVideoPlayerScreen> {
               ),
             ),
           ),
-          VideoControlsOverlay(
+          NetworkVideoControlsOverlay(
             onToggleOrientation: toggleOrientation,
           ),
         ],

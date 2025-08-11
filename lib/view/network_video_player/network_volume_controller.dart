@@ -3,14 +3,14 @@ import 'package:learning_project/services/providers/network_video_player_provide
 import 'package:learning_project/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class VolumeControlSheet extends StatefulWidget {
-  const VolumeControlSheet({super.key});
+class NetworkVolumeControlSheet extends StatefulWidget {
+  const NetworkVolumeControlSheet({super.key});
 
   @override
-  State<VolumeControlSheet> createState() => _VolumeControlSheetState();
+  State<NetworkVolumeControlSheet> createState() => _NetworkVolumeControlSheetState();
 }
 
-class _VolumeControlSheetState extends State<VolumeControlSheet> {
+class _NetworkVolumeControlSheetState extends State<NetworkVolumeControlSheet> {
   @override
   Widget build(BuildContext context) {
     final videoProvider = context.watch<VideoPlayerProvider>();

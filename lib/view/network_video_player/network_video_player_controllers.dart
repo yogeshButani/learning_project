@@ -2,20 +2,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:learning_project/services/providers/network_video_player_provider.dart';
 import 'package:learning_project/utils/app_colors.dart';
-import 'package:learning_project/view/network_video_player/playback_speed_controller.dart';
-import 'package:learning_project/view/network_video_player/volume_controller.dart';
+import 'package:learning_project/view/network_video_player/network_playback_speed_controller.dart';
+import 'package:learning_project/view/network_video_player/network_volume_controller.dart';
 import 'package:provider/provider.dart';
 
-class VideoControlsOverlay extends StatefulWidget {
+class NetworkVideoControlsOverlay extends StatefulWidget {
   final VoidCallback onToggleOrientation;
 
-  const VideoControlsOverlay({super.key, required this.onToggleOrientation});
+  const NetworkVideoControlsOverlay({super.key, required this.onToggleOrientation});
 
   @override
-  State<VideoControlsOverlay> createState() => _VideoControlsOverlayState();
+  State<NetworkVideoControlsOverlay> createState() => _NetworkVideoControlsOverlayState();
 }
 
-class _VideoControlsOverlayState extends State<VideoControlsOverlay> {
+class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverlay> {
   bool _visible = true;
   Timer? _hideTimer;
 
@@ -164,7 +164,7 @@ class _VideoControlsOverlayState extends State<VideoControlsOverlay> {
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (_) => VolumeControlSheet(),
+                                      builder: (_) => NetworkVolumeControlSheet(),
                                     );
                                   },
                                   child: Icon(
@@ -180,7 +180,7 @@ class _VideoControlsOverlayState extends State<VideoControlsOverlay> {
                                     showModalBottomSheet(
                                       context: context,
                                       backgroundColor: Colors.transparent,
-                                      builder: (_) => const PlaybackSpeedController(),
+                                      builder: (_) => const NetworkPlaybackSpeedController(),
                                     );
                                   },
                                   child: Text(

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:learning_project/services/providers/network_video_player_provider.dart';
+import 'package:learning_project/services/providers/youtube_video_player_provider.dart';
 import 'package:learning_project/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class PlaybackSpeedController extends StatefulWidget {
-  const PlaybackSpeedController({super.key});
+class YoutubePlaybackSpeedController extends StatefulWidget {
+  const YoutubePlaybackSpeedController({super.key});
 
   @override
-  State<PlaybackSpeedController> createState() => _PlaybackSpeedControllerState();
+  State<YoutubePlaybackSpeedController> createState() =>
+      _YoutubePlaybackSpeedControllerState();
 }
 
-class _PlaybackSpeedControllerState extends State<PlaybackSpeedController> {
+class _YoutubePlaybackSpeedControllerState
+    extends State<YoutubePlaybackSpeedController> {
   final List<double> speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
   @override
   Widget build(BuildContext context) {
-    final playbackSpeedProvider = context.watch<VideoPlayerProvider>();
+    final playbackSpeedProvider = context.watch<YouTubeVideoPlayerProvider>();
     final selectedSpeed = playbackSpeedProvider.playbackSpeed;
 
     return Container(
@@ -49,7 +51,7 @@ class _PlaybackSpeedControllerState extends State<PlaybackSpeedController> {
                 },
                 child: Container(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.appColor
