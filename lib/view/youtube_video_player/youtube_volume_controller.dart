@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learning_project/services/providers/youtube_video_player_provider.dart';
 import 'package:learning_project/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,8 @@ class YoutubeVolumeControlSheet extends StatefulWidget {
   const YoutubeVolumeControlSheet({super.key});
 
   @override
-  State<YoutubeVolumeControlSheet> createState() => _YoutubeVolumeControlSheetState();
+  State<YoutubeVolumeControlSheet> createState() =>
+      _YoutubeVolumeControlSheetState();
 }
 
 class _YoutubeVolumeControlSheetState extends State<YoutubeVolumeControlSheet> {
@@ -33,14 +35,16 @@ class _YoutubeVolumeControlSheetState extends State<YoutubeVolumeControlSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                icon: Icon(
-                  videoProvider.isMuted ? Icons.volume_off : Icons.volume_up,
-                  size: 30,
+              SvgPicture.asset(
+                videoProvider.isMuted
+                    ? 'assets/images/ic_video_volume_mute.svg'
+                    : 'assets/images/ic_video_volume_unmute.svg',
+                height: 25,
+                width: 25,
+                colorFilter: ColorFilter.mode(
+                  Colors.black,
+                  BlendMode.srcIn,
                 ),
-                onPressed: () {
-                  videoProvider.toggleMute();
-                },
               ),
               Expanded(
                 child: Slider(
@@ -59,8 +63,7 @@ class _YoutubeVolumeControlSheetState extends State<YoutubeVolumeControlSheet> {
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textColor
-                ),
+                    color: AppColors.textColor),
               ),
             ],
           ),

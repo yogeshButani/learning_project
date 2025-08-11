@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:learning_project/services/providers/network_video_player_provider.dart';
 import 'package:learning_project/utils/app_colors.dart';
 import 'package:learning_project/view/network_video_player/network_playback_speed_controller.dart';
@@ -8,14 +9,21 @@ import 'package:provider/provider.dart';
 
 class NetworkVideoControlsOverlay extends StatefulWidget {
   final VoidCallback onToggleOrientation;
+  final Widget? header;
 
-  const NetworkVideoControlsOverlay({super.key, required this.onToggleOrientation});
+  const NetworkVideoControlsOverlay({
+    super.key,
+    required this.onToggleOrientation,
+    this.header,
+  });
 
   @override
-  State<NetworkVideoControlsOverlay> createState() => _NetworkVideoControlsOverlayState();
+  State<NetworkVideoControlsOverlay> createState() =>
+      _NetworkVideoControlsOverlayState();
 }
 
-class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverlay> {
+class _NetworkVideoControlsOverlayState
+    extends State<NetworkVideoControlsOverlay> {
   bool _visible = true;
   Timer? _hideTimer;
 
@@ -59,86 +67,71 @@ class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverla
           ignoring: !_visible,
           child: Stack(
             children: [
-              // Center Play/Pause
+              widget.header ?? SizedBox.shrink(),
               Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 30,
-                children: [
-                  // -10 seconds button
-                  GestureDetector(
-                    onTap: () {
-                      provider.seekBackward();
-                      _startHideTimer();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black87.withValues(alpha: 0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.replay_10,
-                        size: 30,
-                        color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 30,
+                  children: [
+                    // -10 seconds button
+                    GestureDetector(
+                      onTap: () {
+                        provider.seekBackward();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/ic_video_backward.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  // Play/Pause button
-                  GestureDetector(
-                    onTap: () {
-                      provider.togglePlayPause();
-                      _startHideTimer();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black87.withValues(alpha: 0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
+                    // Play/Pause button
+                    GestureDetector(
+                      onTap: () {
+                        provider.togglePlayPause();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
                         provider.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow_outlined,
-                        size: 35,
-                        color: Colors.white,
+                            ? 'assets/images/ic_video_pause.svg'
+                            : 'assets/images/ic_video_play.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  // +10 seconds button
-                  GestureDetector(
-                    onTap: () {
-                      provider.seekForward();
-                      _startHideTimer();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black87.withValues(alpha: 0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.forward_10,
-                        size: 30,
-                        color: Colors.white,
+                    // +10 seconds button
+                    GestureDetector(
+                      onTap: () {
+                        provider.seekForward();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/ic_video_forward.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )),
-
-              // Bottom Controls
+                  ],
+                ),
+              ),
               Positioned(
-                bottom: 30,
+                bottom: 15,
                 left: 15,
                 right: 15,
                 child: Column(
+                  spacing: 10,
                   children: [
                     // Orientation Button
                     Row(
@@ -149,38 +142,55 @@ class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverla
                             child: GestureDetector(
                               onTap: widget.onToggleOrientation,
                               behavior: HitTestBehavior.translucent,
-                              child: const Icon(Icons.screen_rotation,
-                                  color: Colors.white),
+                              child: SvgPicture.asset(
+                                provider.isLandscape
+                                    ? 'assets/images/ic_video_screen_rotate_undo.svg'
+                                    : 'assets/images/ic_video_screen_rotate.svg',
+                                height: 30,
+                                width: 30,
+                                colorFilter: ColorFilter.mode(
+                                  Colors.white,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Column(
-                              spacing: 30,
-                              children: [
-                                GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            spacing: 15,
+                            children: [
+                              Flexible(
+                                child: GestureDetector(
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: (_) => NetworkVolumeControlSheet(),
+                                      builder: (_) =>
+                                       NetworkVolumeControlSheet(),
                                     );
                                   },
-                                  child: Icon(
+                                  child: SvgPicture.asset(
                                     provider.isMuted
-                                        ? Icons.volume_off
-                                        : Icons.volume_up,
-                                    color: Colors.white,
-                                    size: 30,
+                                        ? 'assets/images/ic_video_volume_mute.svg'
+                                        : 'assets/images/ic_video_volume_unmute.svg',
+                                    height: 30,
+                                    width: 30,
+                                    colorFilter: ColorFilter.mode(
+                                      Colors.white,
+                                      BlendMode.srcIn,
+                                    ),
                                   ),
                                 ),
-                                GestureDetector(
+                              ),
+                              Flexible(
+                                child: GestureDetector(
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
                                       backgroundColor: Colors.transparent,
-                                      builder: (_) => const NetworkPlaybackSpeedController(),
+                                      builder: (_) =>
+                                      const NetworkPlaybackSpeedController(),
                                     );
                                   },
                                   child: Text(
@@ -191,37 +201,32 @@ class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverla
                                         fontWeight: FontWeight.w700),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 5),
-
-                    // Slider + Time
                     Row(
+                      spacing: 10,
                       children: [
                         Text(
                           _formatDuration(provider.position),
                           style: const TextStyle(color: Colors.white),
                         ),
                         Expanded(
-                          child: Transform.scale(
-                            scale: 1.11,
-                            child: Slider(
-                              value: provider.position.inSeconds
-                                  .clamp(0, provider.duration.inSeconds)
-                                  .toDouble(),
-                              max: provider.duration.inSeconds.toDouble(),
-                              onChanged: (value) {
-                                provider
-                                    .seekTo(Duration(seconds: value.toInt()));
-                                _startHideTimer();
-                              },
-                              activeColor: AppColors.appColor,
-                              inactiveColor: Colors.white54,
-                            ),
+                          child: Slider(
+                            value: provider.position.inSeconds
+                                .clamp(0, provider.duration.inSeconds)
+                                .toDouble(),
+                            max: provider.duration.inSeconds.toDouble(),
+                            onChanged: (value) {
+                              provider
+                                  .seekTo(Duration(seconds: value.toInt()));
+                              _startHideTimer();
+                            },
+                            activeColor: AppColors.appColor,
+                            inactiveColor: Colors.white54,
                           ),
                         ),
                         Text(
@@ -242,8 +247,8 @@ class _NetworkVideoControlsOverlayState extends State<NetworkVideoControlsOverla
 
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final minutes = duration.inMinutes; // total minutes
     final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '${twoDigits(duration.inHours)}:$minutes:$seconds';
+    return '$minutes:$seconds';
   }
 }
