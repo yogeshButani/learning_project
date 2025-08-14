@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learning_project/services/providers/app_providers.dart';
-import 'package:learning_project/view/video_players/enter_url_screen.dart';
+import 'package:learning_project/view/themes/theme_provider.dart';
+import 'package:learning_project/view/themes/theme_settings_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -15,14 +17,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'Testing App',
       debugShowCheckedModeBanner: false,
+      themeMode: themeProvider.themeMode,
       theme: ThemeData(
+        brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: themeProvider.primaryColor, // app primary color
+          surface: Color(0xFFFFFFFF), // for background
+          onSurface: Colors.black, // for texts, icons
+          brightness: Brightness.light,
         ),
-        useMaterial3: true,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: themeProvider.primaryColor, // app primary color
+          surface: Color(0xFF2A2525), // for background
+          onSurface: Colors.white, // for texts, icons
+          brightness: Brightness.dark,
+        ),
       ),
       builder: (context, widget) {
         return ScrollConfiguration(
@@ -30,7 +47,7 @@ class MyApp extends StatelessWidget {
           child: widget!,
         );
       },
-      home: const EnterUrlScreen(),
+      home: const ThemeSettingsScreen(),
     );
   }
 }
