@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_project/services/providers/app_providers.dart';
-import 'package:learning_project/view/enter_url_screen.dart';
+import 'package:learning_project/view/video_players/enter_url_screen.dart';
 
 void main() {
   runApp(

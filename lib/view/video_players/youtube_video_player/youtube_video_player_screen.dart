@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learning_project/services/providers/youtube_video_player_provider.dart';
 import 'package:learning_project/utils/my_app_bar.dart';
-import 'package:learning_project/view/youtube_video_player/youtube_video_player_controllers.dart';
+import 'package:learning_project/view/video_players/youtube_video_player/youtube_video_player_controllers.dart';
+
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 

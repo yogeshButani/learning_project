@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:learning_project/services/providers/network_video_player_provider.dart';
 import 'package:learning_project/utils/my_app_bar.dart';
-import 'package:learning_project/view/network_video_player/network_video_player_controllers.dart';
+import 'package:learning_project/view/video_players/network_video_player/network_video_player_controllers.dart';
+
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

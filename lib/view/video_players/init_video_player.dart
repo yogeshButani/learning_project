@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learning_project/utils/app_colors.dart';
-import 'package:learning_project/view/network_video_player/network_video_player_screen.dart';
-import 'package:learning_project/view/youtube_video_player/youtube_video_player_screen.dart';
+import 'package:learning_project/view/video_players/network_video_player/network_video_player_screen.dart';
+
+import 'package:learning_project/view/video_players/youtube_video_player/youtube_video_player_screen.dart';
+
 
 enum UrlType {
   youtube,

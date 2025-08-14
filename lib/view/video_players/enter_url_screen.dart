@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learning_project/utils/app_colors.dart';
-import 'package:learning_project/view/init_video_player.dart';
+
+import 'package:learning_project/view/video_players/init_video_player.dart';
 
 class EnterUrlScreen extends StatefulWidget {
   const EnterUrlScreen({super.key});

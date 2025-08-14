@@ -1,29 +1,31 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:learning_project/services/providers/youtube_video_player_provider.dart';
+import 'package:learning_project/services/providers/network_video_player_provider.dart';
 import 'package:learning_project/utils/app_colors.dart';
-import 'package:learning_project/view/youtube_video_player/youtube_playback_speed_controller.dart';
-import 'package:learning_project/view/youtube_video_player/youtube_volume_controller.dart';
+import 'package:learning_project/view/video_players/network_video_player/network_playback_speed_controller.dart';
+
 import 'package:provider/provider.dart';
 
-class YoutubeVideoControlsOverlay extends StatefulWidget {
+import 'network_volume_controller.dart';
+
+class NetworkVideoControlsOverlay extends StatefulWidget {
   final VoidCallback onToggleOrientation;
   final Widget? header;
 
-  const YoutubeVideoControlsOverlay({
+  const NetworkVideoControlsOverlay({
     super.key,
     required this.onToggleOrientation,
     this.header,
   });
 
   @override
-  State<YoutubeVideoControlsOverlay> createState() =>
-      _YoutubeVideoControlsOverlayState();
+  State<NetworkVideoControlsOverlay> createState() =>
+      _NetworkVideoControlsOverlayState();
 }
 
-class _YoutubeVideoControlsOverlayState
-    extends State<YoutubeVideoControlsOverlay> {
+class _NetworkVideoControlsOverlayState
+    extends State<NetworkVideoControlsOverlay> {
   bool _visible = true;
   Timer? _hideTimer;
 
@@ -55,7 +57,8 @@ class _YoutubeVideoControlsOverlayState
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<YouTubeVideoPlayerProvider>();
+    final provider = context.watch<VideoPlayerProvider>();
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _showControlsTemporarily,
@@ -68,64 +71,63 @@ class _YoutubeVideoControlsOverlayState
             children: [
               widget.header ?? SizedBox.shrink(),
               Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 30,
-                children: [
-                  // -10 seconds button
-                  GestureDetector(
-                    onTap: () {
-                      provider.seekBackward();
-                      _startHideTimer();
-                    },
-                    child: SvgPicture.asset(
-                      'assets/images/ic_video_backward.svg',
-                      height: 30,
-                      width: 30,
-                      colorFilter: ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 30,
+                  children: [
+                    // -10 seconds button
+                    GestureDetector(
+                      onTap: () {
+                        provider.seekBackward();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/ic_video_backward.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  // Play/Pause button
-                  GestureDetector(
-                    onTap: () {
-                      provider.togglePlayPause();
-                      _startHideTimer();
-                    },
-                    child: SvgPicture.asset(
-                      provider.isPlaying
-                          ? 'assets/images/ic_video_pause.svg'
-                          : 'assets/images/ic_video_play.svg',
-                      height: 30,
-                      width: 30,
-                      colorFilter: ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
+                    // Play/Pause button
+                    GestureDetector(
+                      onTap: () {
+                        provider.togglePlayPause();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
+                        provider.isPlaying
+                            ? 'assets/images/ic_video_pause.svg'
+                            : 'assets/images/ic_video_play.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                  // +10 seconds button
-                  GestureDetector(
-                    onTap: () {
-                      provider.seekForward();
-                      _startHideTimer();
-                    },
-                    child: SvgPicture.asset(
-                      'assets/images/ic_video_forward.svg',
-                      height: 30,
-                      width: 30,
-                      colorFilter: ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
+                    // +10 seconds button
+                    GestureDetector(
+                      onTap: () {
+                        provider.seekForward();
+                        _startHideTimer();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/ic_video_forward.svg',
+                        height: 30,
+                        width: 30,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )),
-
-              // Bottom Controls
+                  ],
+                ),
+              ),
               Positioned(
                 bottom: 15,
                 left: 15,
@@ -167,7 +169,7 @@ class _YoutubeVideoControlsOverlayState
                                     showModalBottomSheet(
                                       context: context,
                                       builder: (_) =>
-                                          YoutubeVolumeControlSheet(),
+                                       NetworkVolumeControlSheet(),
                                     );
                                   },
                                   child: SvgPicture.asset(
@@ -190,7 +192,7 @@ class _YoutubeVideoControlsOverlayState
                                       context: context,
                                       backgroundColor: Colors.transparent,
                                       builder: (_) =>
-                                          const YoutubePlaybackSpeedController(),
+                                      const NetworkPlaybackSpeedController(),
                                     );
                                   },
                                   child: Text(
