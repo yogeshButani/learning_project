@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_project/services/providers/load_multiple_videos_provider.dart';
 import 'package:learning_project/services/providers/network_video_player_provider.dart';
 import 'package:learning_project/services/providers/youtube_video_player_provider.dart';
 import 'package:learning_project/view/themes/theme_provider.dart';
@@ -16,6 +17,9 @@ class AppProviders {
         ),
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TrainingVideosProvider(),
         ),
       ],
       child: child,

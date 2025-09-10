@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learning_project/services/providers/app_providers.dart';
 import 'package:learning_project/view/themes/theme_provider.dart';
 import 'package:learning_project/view/themes/theme_settings_screen.dart';
+import 'package:learning_project/view/video_players/reels_test_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           child: widget!,
         );
       },
-      home: const ThemeSettingsScreen(),
+      home: const ReelsTestScreen(),
     );
   }
 }
